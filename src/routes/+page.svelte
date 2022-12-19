@@ -4,9 +4,11 @@
     For now I'm messing around with SvelteKit to understand its ins and outs. If you want to see that
     heres a 
 
-<a href = "/hello-world">link</a>.
-
+<a href = "/hello-world">link</a>
+    and here's my 
+    <a href="/blog">blog</a>
 </p>
+
 
 <style>
     p {
