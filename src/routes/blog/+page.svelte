@@ -6,5 +6,15 @@
 <h1>
     Nevis' blog
 </h1>
+<div>
+    <Post2022_12_19 />
+</div>
 
-<Post2022_12_19 />
+
+<style>
+    div {
+        margin: auto;
+        border: 5px  red;
+        padding: 10px;
+    }
+</style>
