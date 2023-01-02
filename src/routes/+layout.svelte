@@ -7,7 +7,6 @@
 			<ul >
 				<li class="float: left"><a href="../">Home</a></li>
 				<li class="float: left"><a href="../demos/movies">Movies</a></li>
-				<li class="float: left"><a href="../demos/tic-tac-toe">Game</a></li>
 				<li class="float: left"><a href="../blog">Blog</a></li>
 			</ul>
 		</div>
@@ -63,6 +62,6 @@
 		background-color: #3F4E4F;
 		width: 75%;
 		margin: auto;
-		
+
 	}
 </style>

@@ -21,3 +21,16 @@
 {:else}
 	Movies could not be fetched
 {/if}
+
+
+<style>
+	p{
+		color: #DCD7C9;
+		padding:5px;
+	}
+	h1{
+		color: #DCD7C9;
+		padding: 5px;
+	}
+
+</style>
