@@ -3,7 +3,7 @@
 	let movies = [];
 	onMount(async () => {
 		const res = await fetch(
-			'https://api.themoviedb.org/3/movie/top_rated/?api_key=de15c54b61b034324d0e337a788e499d'
+			'https://api.themoviedb.org/3/movie/top_rated?api_key=de15c54b61b034324d0e337a788e499d&language=en-US&page=1'
 		);
 		const data = await res.json();
 		if (res.ok) {
