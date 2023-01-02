@@ -10,10 +10,12 @@
 </div>
 
 <style>
+
     div {
-        
+        color: #DCD7C9;
         width: 65%;
-        border: 2px solid grey;
+        border: 2px black;
+        border-color: #A27B5C;
         border-radius: 5px;
         padding: 50px;
         margin: auto;
