@@ -3,7 +3,7 @@ import { getBlogPosts } from "$lib/server/database";
 
 export async function load({params}) {
     const data = await getBlogPosts();
-    const posts = data.data.sort((a,b) => new Date(a.date).getDate() - new Date(b.date).getDate());
+    const posts = data.data.sort((a,b) => new Date(b.date) - new Date(a.date));
     return {
         posts: posts
     };
