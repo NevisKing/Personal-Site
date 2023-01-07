@@ -6,6 +6,9 @@ export async function load({params}) {
 
     const posts = data.data.sort((a,b) => new Date(b.date) - new Date(a.date));
 
+export async function load({params}) {
+    const data = await getBlogPosts();
+    const posts = data.data.sort((a,b) => new Date(a.date).getDate() - new Date(b.date).getDate());
     return {
         posts: posts
     };
