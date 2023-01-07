@@ -1,0 +1,11 @@
+{
+	"/": [],
+	"/blog": [
+		"src/routes/blog/+page.server.js"
+	],
+	"/demos/movies": [
+		"src/routes/demos/movies/+page.server.ts"
+	],
+	"/demos/tutorial": [],
+	"/hello-world": []
+}
