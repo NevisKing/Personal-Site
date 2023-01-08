@@ -6,9 +6,7 @@
 	"/demos/movies": [
 		"src/routes/demos/movies/+page.server.ts"
 	],
-	"/demos/sync": [
-		"src/routes/demos/sync/+page.js"
-	],
+	"/demos/sync": [],
 	"/demos/tutorial": [],
 	"/hello-world": []
 }
