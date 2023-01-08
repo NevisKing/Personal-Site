@@ -3,67 +3,46 @@
     //import { broadcastMouse } from "$lib/sync/synctest";
     //import { listenMouse } from "$lib/sync/synctest";
     import { checkLatency } from "$lib/sync/synctest";
+
+	import { newRealtimeClient } from "$lib/sync/realtime";
     let x = 0;
     let y = 0;
 
+	const broadcastClient = newRealtimeClient(10);
+	const listenClient = newRealtimeClient(10);
+	
     function broadcastMouse() {
-        const supabase = createClient(
-		'https://qojbkzgbayqmfocnejly.supabase.co',
-		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvamJremdiYXlxbWZvY25lamx5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzI4NDA1MjcsImV4cCI6MTk4ODQxNjUyN30.NEWeeUcGmUum6MM0zEEzebudMKVJbvXk1iiVJJqayxY',
-		{
-			realtime: {
-				params: {
-					eventsPerSecond: 10
-				}
-			}
-		}
-	);
 
-    
 	// Channel name can be any string.
 	// Create channels with the same name for both the broadcasting and receiving clients.
 	const channel = supabase.channel('room1');
-
         channel.subscribe((status) => {
 		if (status === 'SUBSCRIBED') {
 			// now you can start broadcasting cursor positions
-			setInterval(() => {
+
 				channel.send({
 					type: 'broadcast',
 					event: 'cursor-pos',
 					payload: { x: x, y: y }
 				});
 				//console.log(status);
-			}, 100);
+
+			}
 		}
-	});
+	);
+
     }
 
 
 
     function listenMouse() {
-	const supabase = createClient(
-		'https://qojbkzgbayqmfocnejly.supabase.co',
-		'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvamJremdiYXlxbWZvY25lamx5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzI4NDA1MjcsImV4cCI6MTk4ODQxNjUyN30.NEWeeUcGmUum6MM0zEEzebudMKVJbvXk1iiVJJqayxY',
-		{
-			realtime: {
-				params: {
-					eventsPerSecond: 10
-				}
-			}
-		}
-	);
 
-    
 	// Channel name can be any string.
 	// Create channels with the same name for both the broadcasting and receiving clients.
-	const channel = supabase.channel('room1');
-
-        
-// Subscribe registers your client with the server
 
 
-	supabase
+	broadcastClient
+
 		.channel('room1')
 		.on('broadcast', { event: 'cursor-pos' }, (payload) => {
             x = payload.payload.x;
@@ -80,16 +59,62 @@
         y = event.clientY;
     }
     
-    
+
+    let newMessage = "";
+	 function submitMessage(){
+		const channel = broadcastClient.channel('room1');
+         channel.subscribe(async (status) => {
+		if (status === 'SUBSCRIBED') {
+			// now you can start broadcasting cursor positions
+
+				 await channel.send({
+					type: 'broadcast',
+					event: 'message',
+					payload: {message: newMessage}
+				});
+				newMessage = "";
+			}
+			
+		}
+		
+	);
+
+	}
+	let messages = [];
+	function listenToMessages(){
+
+	listenClient
+		.channel('room1')
+		.on('broadcast', { event: 'message' }, (payload) => {
+            messages = messages.concat([payload.payload.message])
+        })
+		.subscribe((status) => {
+			if (status === 'SUBSCRIBED') {
+				
+			}
+		});
+	}
+
+	listenToMessages();
+
+
 </script>
-<div on:mousemove={updateMouse}>
-    <button on:click={broadcastMouse} > Broadcast</button>
-<button on:click={listenMouse} > Listen</button>
-<button on:click={checkLatency} > Latency</button>
-<button >{x}, {y}</button>
+
+<div>
+	{#each messages as message}
+		<p>{message}</p>
+	{/each}
+	<label for="Message">Message</label>
+	<form on:submit|preventDefault={submitMessage} autocomplete="off">
+		<input type="text" id="Message" name="Message" bind:value={newMessage} ><br><br>
+		<input type="submit" hidden />
+	</form>
 </div>
 
+	
 
+
+	
 
 
 <style >
@@ -100,5 +125,11 @@
     div{
         min-width: 300px;
         min-height: 500px;
+
+		max-width: 70%;
     }
+	p{
+		word-break: break-all;
+	}
+
 </style>
