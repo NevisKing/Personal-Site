@@ -3,6 +3,7 @@
     //import { broadcastMouse } from "$lib/sync/synctest";
     //import { listenMouse } from "$lib/sync/synctest";
     import { checkLatency } from "$lib/sync/synctest";
+
 	import { newRealtimeClient } from "$lib/sync/realtime";
     let x = 0;
     let y = 0;
@@ -25,19 +26,23 @@
 					payload: { x: x, y: y }
 				});
 				//console.log(status);
+
 			}
 		}
 	);
+
     }
 
 
 
     function listenMouse() {
+
 	// Channel name can be any string.
 	// Create channels with the same name for both the broadcasting and receiving clients.
 
 
 	broadcastClient
+
 		.channel('room1')
 		.on('broadcast', { event: 'cursor-pos' }, (payload) => {
             x = payload.payload.x;
@@ -54,6 +59,7 @@
         y = event.clientY;
     }
     
+
     let newMessage = "";
 	 function submitMessage(){
 		const channel = broadcastClient.channel('room1');
@@ -110,6 +116,7 @@
 
 	
 
+
 <style >
     button{
         min-width: 50px;
@@ -118,9 +125,11 @@
     div{
         min-width: 300px;
         min-height: 500px;
+
 		max-width: 70%;
     }
 	p{
 		word-break: break-all;
 	}
+
 </style>
